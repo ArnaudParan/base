@@ -12,7 +12,7 @@ Unit tests are all set up for the four languages
 
 The project can be used with Docker
 
-to launch the tests of the *js* part, use
+to launch the tests of the **js** part, use
 
 ```bash
 
@@ -20,7 +20,7 @@ $ yarn mocha
 
 ```
 
-to launch the tests of the *elm* part, use
+to launch the tests of the **elm** part, use
 
 ```bash
 
@@ -28,7 +28,7 @@ $ elm-test
 
 ```
 
-to launch the tests of the *python* part, use
+to launch the tests of the **python** part, use
 
 ```bash
 
@@ -36,7 +36,7 @@ $ pytest
 
 ```
 
-to launch the tests of the *rust* part, use
+to launch the tests of the **rust** part, use
 
 ```bash
 
