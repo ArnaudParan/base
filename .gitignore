@@ -790,3 +790,5 @@ MigrationBackup/
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,rust,elm,vim,emacs,linux,python,node,tags,visualstudio,visualstudiocode,codeblocks
 
 /rust-back/schema.rs
+
+*.elm.js
