@@ -16,7 +16,7 @@ services:
       - socks:/tmp/sockets:rw
       - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./config/mime.types:/etc/nginx/conf/mime.types:ro
-      - ./static:/etc/nginx/html:ro
+      - ./build:/etc/nginx/html:ro
     ports:
       - '8000:8000'
   py:

@@ -5,14 +5,19 @@ module.exports = {
       {},
     ],
   ],
+  buildOptions: {
+    baseUrl: '/static',
+    clean: true,
+    webModulesUrl: 'web_modules',
+    metaDir: '__snowpack__',
+  },
   devOptions: {
     open: 'false',
   },
-  config: {
-    mount: {
-      'public': { url: '/static/' },
-      'frontend': { url: '/static/' },
-    },
+  mount: {
+    'public': { url: '/' },
+    'frontend': { url: '/' },
+    'config/js': { url: '/' },
   },
   proxy: {
     '/apip': 'http://localhost:8000/apip',

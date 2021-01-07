@@ -1,9 +1,9 @@
 {
   "name": "base",
   "version": "1.0.0",
-  "main": "frontend/js/index.js",
+  "main": "js/index.js",
   "browser": {
-    "index.js": "frontend/js/index.js"
+    "index.js": "js/index.js"
   },
   "license": "MIT",
   "scripts": {
