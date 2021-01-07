@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "base"
+version = "0.1.0"
+description = ""
+authors = ["Arnaud Paran <paran.arnaud@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+falcon = "^2.0.0"
+gunicorn = "^20.0.4"
+pyyaml = "^5.3.1"
+
+[tool.poetry.dev-dependencies]
+
+pytest = "^6.2.1"
+pylint = "^2.6.0"
+mypy = "^0.790"
+
+[tool.pytest.ini_options]
+
+minversion = "6.0"
+
+addopts = "-ra -q"
+
+testpaths = [
+    "pyBack/tests",
+]
+
+python_files = [
+    "test_*.py",
+    "check_*.py",
+    "example_*.py",
+]
+
+python_functions = [
+    "*_test",
+]

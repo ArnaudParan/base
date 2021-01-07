@@ -1,0 +1,57 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:13.1
+    environment:
+      - POSTGRES_PASSWORD=${DB_PWD}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - db:/var/lib/postgresql/data:rw
+  nginx:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-nginx
+    volumes:
+      - socks:/tmp/sockets:rw
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/mime.types:/etc/nginx/conf/mime.types:ro
+      - ./static:/etc/nginx/html:ro
+    ports:
+      - '8000:8000'
+  py:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-py
+    volumes:
+      - .:/srv:ro
+      - py-venv:/var/venv:rw
+      - socks:/tmp/sockets:rw
+    environment:
+      - VENV=/var/venv
+      - WDIR=/srv
+      - SOCK=/tmp/sockets/py.sock
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PWD}@db/${DB_NAME}
+    links:
+      - db
+    entrypoint: bash /srv/docker/py-back.sh
+  rust:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-rust
+    volumes:
+      - .:/srv:ro
+      - cargo:/var/cache/cargo:rw
+      - socks:/tmp/sockets:rw
+    environment:
+      - WDIR=/srv
+      - R_BACK_SOCK=/tmp/sockets/rust.sock
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PWD}@db/${DB_NAME}
+    links:
+      - db
+    entrypoint: bash /srv/docker/rust-back.sh
+volumes:
+  py-venv:
+  socks:
+  cargo:
+  db:

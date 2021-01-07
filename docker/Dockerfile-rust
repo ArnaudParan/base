@@ -1,0 +1,14 @@
+FROM rust:1.47.0
+
+RUN useradd -ms /bin/bash www \
+  && mkdir -p /var/cache/cargo \
+  && chown www:www /var/cache/cargo \
+  && mkdir -p /tmp/sockets \
+  && chown www:www /tmp/sockets
+
+USER www
+
+RUN cargo install diesel_cli \
+  && cargo install cargo-watch
+
+WORKDIR /srv

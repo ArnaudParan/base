@@ -1,0 +1,19 @@
+FROM python:3.8
+
+RUN useradd -ms /bin/bash www \
+  && mkdir -p /var/venv \
+  && chown www:www /var/venv \
+  && mkdir -p /tmp/sockets \
+  && chown www:www /tmp/sockets
+
+USER www
+
+RUN pip install virtualenv \
+  && export PATH="$PATH:$HOME/.local/bin" \
+  && virtualenv /var/venv
+
+WORKDIR /srv
+
+COPY py-back.sh /opt/py-back.sh
+
+ENTRYPOINT bash /opt/py-back.sh

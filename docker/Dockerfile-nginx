@@ -1,0 +1,8 @@
+FROM nginx:1.19.4
+
+RUN useradd -ms /bin/bash www \
+  && chown www /var/cache/nginx/ \
+  && mkdir -p /etc/nginx/logs \
+  && chown www /etc/nginx/logs
+
+USER www

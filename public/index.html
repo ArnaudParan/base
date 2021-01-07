@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Default Title</title>
+  <script type="module" src="frontend/js/main.min.elm.js"></script>
+  <script type="module" src="frontend/js/index.js"></script>
+</head>
+
+<body>
+  <div id="myapp"></div>
+  <script type="module">
+  var app = Elm.Main.init({
+    node: document.getElementById('myapp')
+  });
+  </script>
+</body>
+</html>
