@@ -47,10 +47,14 @@ async fn main() -> std::io::Result<()> {
     LogTracer::init().expect("Unable to setup log tracer!");
 
     let app_name = concat!(env!("CARGO_PKG_NAME"), "-", env!("CARGO_PKG_VERSION")).to_string();
-    let (non_blocking_writer, _guard) = tracing_appender::non_blocking(std::io::stdout());
-    let bunyan_formatting_layer = BunyanFormattingLayer::new(app_name, non_blocking_writer);
-    let fmt_sub = tracing_subscriber::fmt::Subscriber::default()
-        .with(EnvFilter::new("INFO"));
+    let (non_blocking_writer_fmt, _guard_fmt) = tracing_appender::non_blocking(std::io::stderr());
+    let (non_blocking_writer_json, _guard_json) = tracing_appender::non_blocking(std::io::stderr());
+    let bunyan_formatting_layer = BunyanFormattingLayer::new(app_name, non_blocking_writer_json);
+    let format = tracing_subscriber::fmt::layer()
+        .with_writer(non_blocking_writer_fmt);
+    let fmt_sub = Registry::default()
+        .with(EnvFilter::new("INFO"))
+        .with(format);
     let json_sub = Registry::default()
         .with(EnvFilter::new("INFO"))
         .with(JsonStorageLayer)
