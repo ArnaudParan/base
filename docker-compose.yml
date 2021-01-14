@@ -8,6 +8,7 @@ services:
       - POSTGRES_DB=${DB_NAME}
     volumes:
       - db:/var/lib/postgresql/data:rw
+      - ./docker/create_users.sql:/docker-entrypoint-initdb.d/create_users.sql:ro
   nginx:
     build:
       context: ./docker
