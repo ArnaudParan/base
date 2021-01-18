@@ -10,15 +10,9 @@ handlers:
     class : logging.StreamHandler
     formatter: default
     level   : DEBUG
-    stream  : ext://sys.stderr
+    stream  : ext://sys.stdout
 loggers:
-  __main__:
-    handlers: [console]
-    level: DEBUG
-  api:
-    handlers: [console]
-    level: DEBUG
-  settings:
+  pyBack:
     handlers: [console]
     level: DEBUG
   falcon:
