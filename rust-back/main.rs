@@ -5,7 +5,7 @@ use tracing_subscriber::{Registry, EnvFilter};
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_bunyan_formatter::{JsonStorageLayer, BunyanFormattingLayer};
 use tracing_log::LogTracer;
-use tracing::{info};
+//use tracing::{info};
 
 #[cfg(test)]
 mod test {
@@ -42,7 +42,12 @@ async fn main() -> std::io::Result<()> {
             Err(_) => Address::TCP(String::from("127.0.0.1:8086")),
         }
     ;
-    let lkind = LoggingKind::Fmt;
+    let lkind =
+        match env::var("PRODUCTION") {
+            Ok(_) => LoggingKind::Json,
+            Err(_) => LoggingKind::Fmt,
+        }
+    ;
 
     LogTracer::init().expect("Unable to setup log tracer!");
 
