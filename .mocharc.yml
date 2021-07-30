@@ -1,1 +1,1 @@
-spec: ./js-tests/**/*.js
+spec: ./js/tests/**/*.js
