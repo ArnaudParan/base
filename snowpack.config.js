@@ -4,6 +4,14 @@ module.exports = {
       '@snowpack/plugin-webpack',
       {},
     ],
+    [
+      'snowpack-plugin-elm',
+      {
+        verbose: true,
+        debugger: (process.env.NODE_ENV === 'development') ? 'dev' : 'never',
+        optimize: (process.env.NODE_ENV === 'production') ? 'build' : 'never',
+      },
+    ],
   ],
   buildOptions: {
     baseUrl: '/static',
@@ -16,8 +24,8 @@ module.exports = {
   },
   mount: {
     'public': { url: '/' },
-    'frontend': { url: '/' },
-    'config/js': { url: '/' },
+    'frontend': { url: '/frontend/' },
+    'elm-front': { url: '/elm-front/' },
   },
   proxy: {
     '/apip': 'http://localhost:8000/apip',
