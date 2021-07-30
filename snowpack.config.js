@@ -24,8 +24,8 @@ module.exports = {
   },
   mount: {
     'public': { url: '/' },
-    'frontend': { url: '/frontend/' },
-    'elm-front': { url: '/elm-front/' },
+    'js': { url: '/js/' },
+    'elm': { url: '/elm/' },
   },
   proxy: {
     '/apip': 'http://localhost:8000/apip',
