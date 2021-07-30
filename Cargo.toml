@@ -7,7 +7,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[bin]]
-path = "rust-back/main.rs"
+path = "rust/main.rs"
 name = "app"
 
 [dependencies]
