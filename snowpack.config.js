@@ -8,8 +8,8 @@ module.exports = {
       'snowpack-plugin-elm',
       {
         verbose: true,
-        debugger: (process.env.NODE_ENV === 'development') ? 'dev' : 'never',
-        optimize: (process.env.NODE_ENV === 'production') ? 'build' : 'never',
+        debugger: 'dev',
+        optimize: 'build',
       },
     ],
   ],
