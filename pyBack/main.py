@@ -6,7 +6,7 @@ class Default:
 
     def on_get(self, req, resp):
         logging.getLogger(__name__).debug('request', extra={'request': req})
-        resp.body = 'Hello World'
+        resp.body = '{"ok": "Hello World"}'
         resp.status = falcon.HTTP_200
 
 

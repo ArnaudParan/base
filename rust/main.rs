@@ -37,9 +37,9 @@ enum Address {
 #[tracing::instrument]
 async fn main() -> std::io::Result<()> {
     let addr =
-        match env::var("R_BACK_SOCK") {
-            Ok(v) => Address::UNIX(v),
-            Err(_) => Address::TCP(String::from("127.0.0.1:8086")),
+        match env::var("RHOST") {
+            Ok(v) => Address::TCP(v),
+            Err(_) => Address::TCP(String::from("127.0.0.1:8000")),
         }
     ;
     let lkind =

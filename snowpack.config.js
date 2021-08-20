@@ -1,3 +1,8 @@
+const PORT = Number(process.env.SPORT) ||  8080
+const HOST = process.env.SHOST ||  'localhost'
+const PROXY_PY = process.env.PROXY_PY
+const PROXY_R = process.env.PROXY_R
+
 module.exports = {
   plugins: [
     [
@@ -21,6 +26,9 @@ module.exports = {
   },
   devOptions: {
     open: 'false',
+    port: PORT,
+    hostname: HOST,
+    output: 'stream',
   },
   mount: {
     'public': { url: '/' },
@@ -28,7 +36,7 @@ module.exports = {
     'elm': { url: '/elm/' },
   },
   proxy: {
-    '/apip': 'http://localhost:8000/apip',
-    '/apir': 'http://localhost:8000/apir',
+    '/apip': PROXY_PY,
+    '/apir': PROXY_R
   },
 };
