@@ -9,7 +9,7 @@ services:
       - POSTGRES_DB=${DB_NAME}
     volumes:
       - db:/var/lib/postgresql/data:rw
-      - ./docker/create_users.sql:/docker-entrypoint-initdb.d/create_users.sql:ro
+      - ./docker/dev/create_users.sql:/docker-entrypoint-initdb.d/create_users.sql:ro
   snowpack:
     image: node:16
     volumes:
@@ -24,13 +24,13 @@ services:
       - SPORT=${SPORT}
       - PROXY_PY=http://py:${PYPORT}/
       - PROXY_R=http://rust:${RPORT}/
-    entrypoint: bash /srv/docker/snowpack-front.sh
+    entrypoint: bash /srv/docker/dev/snowpack-front.sh
     links:
       - rust
       - py
   py:
     build:
-      context: ./docker
+      context: ./docker/dev
       dockerfile: Dockerfile-py
     volumes:
       - .:/srv:ro
@@ -42,10 +42,10 @@ services:
       - GHOST=0.0.0.0:${PYPORT}
     links:
       - db
-    entrypoint: bash /srv/docker/py-back.sh
+    entrypoint: bash /srv/docker/dev/py-back.sh
   rust:
     build:
-      context: ./docker
+      context: ./docker/dev
       dockerfile: Dockerfile-rust
     volumes:
       - .:/srv:ro
@@ -56,7 +56,7 @@ services:
       - RHOST=0.0.0.0:${RPORT}
     links:
       - db
-    entrypoint: bash /srv/docker/rust-back.sh
+    entrypoint: bash /srv/docker/dev/rust-back.sh
 volumes:
   py-venv:
   cargo:
