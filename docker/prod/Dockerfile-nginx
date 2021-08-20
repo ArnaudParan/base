@@ -1,0 +1,24 @@
+FROM node:16 AS frontend
+
+COPY snowpack.config.js /srv/snowpack.config.js
+COPY package.json /srv/package.json
+COPY yarn.lock /srv/yarn.lock
+COPY elm.json /srv/elm.json
+COPY js /srv/js
+COPY elm /srv/elm
+COPY public /srv/public
+
+RUN cd /root && \
+  curl -L -o elm.gz https://github.com/elm/compiler/releases/download/0.19.1/binary-for-linux-64-bit.gz && \
+  gunzip elm.gz && \
+  chmod +x elm && \
+  mv elm /usr/local/bin/ && \
+  cd /srv && \
+  yarn && \
+  npx snowpack build
+
+FROM nginx:1.21.1
+
+COPY --from=frontend /srv/build /etc/nginx/html
+COPY docker/prod/nginx.conf /etc/nginx/nginx.conf
+COPY docker/prod/mime.types /etc/nginx/conf/mime.types

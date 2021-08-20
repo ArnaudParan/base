@@ -1,0 +1,41 @@
+---
+version: "3.9"
+services:
+  db:
+    image: postgres:13.1
+    environment:
+      - POSTGRES_PASSWORD=${DB_PWD}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - db:/var/lib/postgresql/data:rw
+      - ./docker/prod/create_users.sql:/docker-entrypoint-initdb.d/create_users.sql:ro
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/prod/Dockerfile-nginx
+    ports:
+      - '${EPORT}:8000'
+  py:
+    build:
+      context: .
+      dockerfile: docker/prod/Dockerfile-py
+    environment:
+      - WDIR=/srv
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PWD}@db/${DB_NAME}
+      - GHOST=0.0.0.0:${PYPORT}
+    links:
+      - db
+  rust:
+    build:
+      context: .
+      dockerfile: docker/prod/Dockerfile-rust
+    environment:
+      - WDIR=/srv
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PWD}@db/${DB_NAME}
+      - RHOST=0.0.0.0:${RPORT}
+    links:
+      - db
+volumes:
+  db:
+

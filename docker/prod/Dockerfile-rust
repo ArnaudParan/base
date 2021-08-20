@@ -1,0 +1,20 @@
+FROM rust:1.47.0
+
+COPY Cargo.toml /srv/Cargo.toml
+COPY Cargo.lock /srv/Cargo.lock
+COPY diesel.toml /srv/diesel.toml
+COPY migrations /srv/migrations
+COPY rust /srv/rust
+
+RUN install -d /var/cache/cargo && \
+  cargo install diesel_cli && \
+  cd /srv && \
+  cargo build --release && \
+  groupadd -g 1020 www && \
+  useradd -m -u 1020 -g 1020 www
+
+USER www
+
+WORKDIR /srv
+
+ENTRYPOINT target/release/app

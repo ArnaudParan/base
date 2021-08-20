@@ -1,0 +1,17 @@
+FROM python:3.8
+
+COPY requirements.txt /srv/requirements.txt
+COPY docker/prod/py-back.sh /opt/py-back.sh
+
+RUN pip install -r /srv/requirements.txt && \
+  groupadd -g 1020 www && \
+  useradd -m -u 1020 -g 1020 www && \
+  chmod 755 /opt/py-back.sh
+
+COPY py-logging.yml /srv/py-logging.yml
+COPY pyproject.toml /srv/pyproject.toml
+COPY pyBack /srv/pyBack
+
+USER www
+
+ENTRYPOINT /opt/py-back.sh
