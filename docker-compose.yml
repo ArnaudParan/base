@@ -11,7 +11,9 @@ services:
       - db:/var/lib/postgresql/data:rw
       - ./docker/dev/create_users.sql:/docker-entrypoint-initdb.d/create_users.sql:ro
   snowpack:
-    image: node:16
+    build:
+      context: ./docker/dev
+      dockerfile: Dockerfile-front
     volumes:
       - .:/srv:rw
     ports:

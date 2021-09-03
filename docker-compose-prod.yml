@@ -11,12 +11,14 @@ services:
       - db:/var/lib/postgresql/data:rw
       - ./docker/prod/create_users.sql:/docker-entrypoint-initdb.d/create_users.sql:ro
   nginx:
+    image: ctaapp.azurecr.io/front:latest
     build:
       context: .
       dockerfile: docker/prod/Dockerfile-nginx
     ports:
       - '${EPORT}:8000'
   py:
+    image: ctaapp.azurecr.io/py-back:latest
     build:
       context: .
       dockerfile: docker/prod/Dockerfile-py
@@ -27,6 +29,7 @@ services:
     links:
       - db
   rust:
+    image: ctaapp.azurecr.io/rust-back:latest
     build:
       context: .
       dockerfile: docker/prod/Dockerfile-rust
